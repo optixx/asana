@@ -78,7 +78,7 @@ class AsanaAPI(object):
         target = "/".join([self.aurl, quote(api_target, safe="/&=?")])
         if self.debug:
             print "-> Calling: %s" % target
-        r = requests.get(target, auth=(self.apikey, ""))
+        r = requests.get(target, auth=(self.apikey, ""), verify=False)
         if self._ok_status(r.status_code) and r.status_code is not 404:
             if r.headers['content-type'].split(';')[0] == 'application/json':
                 if hasattr(r, 'text'):
@@ -101,7 +101,7 @@ class AsanaAPI(object):
         target = "/".join([self.aurl, quote(api_target, safe="/&=?")])
         if self.debug:
             print "-> Calling: %s" % target
-        r = requests.delete(target, auth=(self.apikey, ""))
+        r = requests.delete(target, auth=(self.apikey, ""), verify=False)
         if self._ok_status(r.status_code) and r.status_code is not 404:
             if r.headers['content-type'].split(';')[0] == 'application/json':
                 if hasattr(r, 'text'):
@@ -133,7 +133,7 @@ class AsanaAPI(object):
                 print "-> Posting file:"
                 pprint(files)
         r = requests.post(
-            target, auth=(self.apikey, ""), data=data, files=files)
+            target, auth=(self.apikey, ""), data=data, files=files, verify=False)
         if self._ok_status(r.status_code) and r.status_code is not 404:
             if r.headers['content-type'].split(';')[0] == 'application/json':
                 return json.loads(r.text)['data']
@@ -154,7 +154,7 @@ class AsanaAPI(object):
             print "-> PUTting to: %s" % target
             print "-> PUT payload:"
             pprint(data)
-        r = requests.put(target, auth=(self.apikey, ""), data=data)
+        r = requests.put(target, auth=(self.apikey, ""), data=data, verify=False)
         if self._ok_status(r.status_code) and r.status_code is not 404:
             if r.headers['content-type'].split(';')[0] == 'application/json':
                 return json.loads(r.text)['data']
